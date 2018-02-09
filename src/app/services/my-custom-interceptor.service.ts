@@ -3,14 +3,15 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpEvent
+  HttpEvent,
+  HttpResponse,
+  HttpErrorResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import { HttpResponse } from 'selenium-webdriver/http';
-import { HttpErrorResponse } from '@angular/common/http/src/response';
+
 @Injectable()
 export class MyCustomInterceptorService implements HttpInterceptor {
   intercept(
@@ -25,12 +26,12 @@ export class MyCustomInterceptorService implements HttpInterceptor {
         if (evento instanceof HttpResponse) {
           console.log(evento);
         }
-      }).catch(response => {
-        if (response instanceof HttpErrorResponse) {
-          console.log(response);
+      }).catch(resposta => {
+        if (resposta instanceof HttpErrorResponse) {
+          console.log(resposta);
         }
 
-        return Observable.throw(response);
+        return Observable.throw(resposta);
       });
   }
 }

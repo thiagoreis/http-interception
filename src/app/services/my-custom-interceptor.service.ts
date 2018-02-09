@@ -13,6 +13,9 @@ export class MyCustomInterceptorService implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return next.handle(request);
+    const cloneReq = request.clone({
+      headers: request.headers.set('Authorization', 'Bearer token')
+    });
+    return next.handle(cloneReq);
   }
 }
